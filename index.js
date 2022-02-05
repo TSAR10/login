@@ -7,10 +7,12 @@ require("dotenv").config();
 
 // routers
 const signupRouter = require("./routes/signup");
+const email = require("./routes/email");
 
 app.use(express.json());
 
 app.use("/api/v1/signup", signupRouter);
+app.use("/api/v1/update", email);
 
 app.get('/', (req, res) =>
 {
