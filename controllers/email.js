@@ -12,12 +12,15 @@ const updateEmail = async (req, res) =>
 
         const userExistDet = await User.findOne({ _id: jsonInp.id });
 
+        console.log(userExistDet);
+
         if(userExistDet)
         {
-            bcrypt.compare(userExistDet.password, jsonInp.password, async function(err, res)
+            bcrypt.compare(jsonInp.password, userExistDet.password, async function(err, done)
             {
-                if(res)
+                if(done)
                 {
+                    console.log("HI pass");
                     if(jsonInp.email)
                     {
                         let update = await User.findOneAndUpdate({ _id: jsonInp.id }, {email: jsonInp.email});
@@ -26,6 +29,10 @@ const updateEmail = async (req, res) =>
                     {
                         let update = await User.findOneAndUpdate({ _id: jsonInp.id }, {password: jsonInp.newPasssword});
                     }
+                }
+                else
+                {
+                    console.log("HI pass err");
                 }
 
                 // UserDet["password"] = hash;
